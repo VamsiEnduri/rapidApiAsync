@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    cart items here
+    <div id="cartData"></div>
+    <p></p>
+    <!-- <div>proceeedtOpayment</div> -->
+    <script>
+        // window.addEventListener("DOMContentLoaded", () => {
+        let allData = JSON.parse(localStorage.getItem("items")) || []
+        // console.log(allData);
+        let cartData = document.getElementById("cartData");
+        allData.forEach((x, index) => {
+            let card = document.createElement("div")
+            card.innerHTML = `
+     <img src="${x.Image}"/>
+     <button class="remove">remove</button>
+`
+            cartData.append(card)
+
+            card.querySelector(".remove").addEventListener("click", () => {
+                let x = confirm("are you sure to dlete the item?");
+                if (x) {
+                    card.remove()
+                    let a = allData.splice(index, 1)
+                    if (allData.length == 0) {
+                        document.querySelector("p").textContent = "your cart is empty"
+                    }
+                }
+                localStorage.setItem("items", JSON.stringify(allData))
+            })
+        })
+        if(allData.length ==0){
+   document.querySelector("p").textContent="your cart is empty"
+        }
+
+    </script>
+</body>
+
+</html>

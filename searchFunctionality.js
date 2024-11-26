@@ -20,8 +20,18 @@ function displayData(b) {
     <img src="${x.Image}"/>
     <h2>${x.Brand}</h2>
     <span>${x.Price}</span>
+    <button class="addToCart">AddToCart</button>
+    <button class="buyNow">BuyNow</button>
     `
+
         cardsContainer.appendChild(card)
+        card.querySelector(".addToCart").addEventListener("click", () => {
+            addToCart(x);
+        })
+
+        card.querySelector(".buyNow").addEventListener("click", () => {
+            window.location.href = "cart.html"
+        })
     });
 }
 
@@ -43,12 +53,16 @@ function searchItem() {
     getFootWearProducts()
     let inputTag = document.getElementById("find").value.trim().toLowerCase();
     var filterData = allData.filter(x => x.Brand.toLowerCase().includes(inputTag));
-    console.log(filterData);
     displayData(filterData)
 }
 
 
-
+function addToCart(item) {
+    let data = JSON.parse(localStorage.getItem("items")) || []
+    data.push(item)
+    alert("item is added to cart")
+    localStorage.setItem("items", JSON.stringify(data))
+}
 
 
 
